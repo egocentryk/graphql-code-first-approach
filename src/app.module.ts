@@ -9,6 +9,10 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { configSchema } from './config.schema'
 
+interface OriginalError {
+  message: string
+}
+
 @Module({
   imports: [
     CoffeesModule,
@@ -18,6 +22,21 @@ import { configSchema } from './config.schema'
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      formatError: (error) => {
+        const originalError = error.extensions?.originalError as OriginalError
+
+        if (!originalError) {
+          return {
+            message: error.message,
+            code: error.extensions?.code,
+          }
+        }
+
+        return {
+          message: originalError.message,
+          code: error.extensions?.code,
+        }
+      },
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
