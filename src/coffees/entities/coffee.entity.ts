@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { loggerMiddleware } from '../../common/middleware/logger.middleware'
 import {
   Column,
   CreateDateColumn,
@@ -18,6 +19,7 @@ export class Coffee implements Drink {
   @Field(() => ID, { description: 'A unique identifier' })
   id: number
 
+  @Field({ middleware: [loggerMiddleware] })
   @Column()
   name: string
 
