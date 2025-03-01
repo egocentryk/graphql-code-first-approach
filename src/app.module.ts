@@ -8,6 +8,8 @@ import { CoffeesModule } from './coffees/coffees.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { configSchema } from './config.schema'
+import { CommonModule } from './common/common.module'
+import { DateScalar } from './common/scalars/date.scalar'
 
 interface OriginalError {
   message: string
@@ -16,6 +18,7 @@ interface OriginalError {
 @Module({
   imports: [
     CoffeesModule,
+    CommonModule,
     ConfigModule.forRoot({
       validationSchema: configSchema,
     }),
