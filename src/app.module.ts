@@ -10,6 +10,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { configSchema } from './config.schema'
 import { CommonModule } from './common/common.module'
 import { DateScalar } from './common/scalars/date.scalar'
+import { Tea } from './teas/entities/tea.entity'
+import { DrinksResolver } from './drinks/drinks.resolver';
 
 interface OriginalError {
   message: string
@@ -25,6 +27,9 @@ interface OriginalError {
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      buildSchemaOptions: {
+        orphanedTypes: [Tea],
+      },
       formatError: (error) => {
         const originalError = error.extensions?.originalError as OriginalError
 
@@ -57,6 +62,6 @@ interface OriginalError {
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, DrinksResolver],
 })
 export class AppModule {}
