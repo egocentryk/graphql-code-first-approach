@@ -6,9 +6,15 @@ import { Coffee } from './entities/coffee.entity'
 import { Flavor } from './entities/flavor.entity'
 import { CoffeeFlavorsResolver } from './coffee-flavors.resolver'
 import { PubSubModule } from '../pub-sub/pub-sub.module'
+import { FlavorsByCoffeeLoader } from './data-loader/flavors-by-coffee.loader'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Coffee, Flavor]), PubSubModule],
-  providers: [CoffeesResolver, CoffeeFlavorsResolver, CoffeesService],
+  providers: [
+    CoffeesResolver,
+    CoffeeFlavorsResolver,
+    CoffeesService,
+    FlavorsByCoffeeLoader,
+  ],
 })
 export class CoffeesModule {}

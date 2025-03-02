@@ -59,6 +59,7 @@ interface OriginalError {
         database: configService.get('DATABASE_NAME'),
         autoLoadEntities: true,
         synchronize: true,
+        logging: ['query'],
       }),
       inject: [ConfigService],
     }),
