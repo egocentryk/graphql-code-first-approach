@@ -11,7 +11,8 @@ import { configSchema } from './config.schema'
 import { CommonModule } from './common/common.module'
 import { DateScalar } from './common/scalars/date.scalar'
 import { Tea } from './teas/entities/tea.entity'
-import { DrinksResolver } from './drinks/drinks.resolver';
+import { DrinksResolver } from './drinks/drinks.resolver'
+import { PubSubModule } from './pub-sub/pub-sub.module'
 
 interface OriginalError {
   message: string
@@ -45,6 +46,7 @@ interface OriginalError {
           code: error.extensions?.code,
         }
       },
+      installSubscriptionHandlers: true,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -60,6 +62,7 @@ interface OriginalError {
       }),
       inject: [ConfigService],
     }),
+    PubSubModule,
   ],
   controllers: [AppController],
   providers: [AppService, DrinksResolver],
